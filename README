@@ -1,0 +1,35 @@
+Dumitrache Daniela Andreea
+331CB
+Limbaje Formale si Automate - Tema1
+
+Folosind jflex am parsat fisierul de input, creand astfel o lista cu simbolurile
+din alfabet si o lista cu Masinile Turing declarate, ce vor si ulterior folosite
+pentru evaluare.
+
+Pentru a parsa input-ul folosesc urmatoarele stari:
+-- YYINITIAL: se citeste cuvntul cheie "alphabet" care marcheaza declararea alfabetului
+-- SEP1: citeste separatorii pana la "::"
+-- DOTS: citeste "::"
+-- SEP2: citeste separatorii pana la inceputul declararii caracterelor 
+-- CHARA: citeste cate un simbol si il adauga in lista alfabetului
+-- GENERAL: determina daca urmeaza un comentariu sau incepe declararea unei masini
+-- COMMENT: citeste un comenatriu (o linie)
+-- MACHINE_NME: citeste numele masinii declarate
+-- MACHINE: in functie de simbolul curent:
+	- "::=" : creaza o noua masina cu numele citit si o adauga in lista
+	- "[" : incepe citirea apelului unei alte masini
+	- "(" : incepe citirea unui set de tranzitii 
+	- "{" : marcheaza inceputul unei set de reguli de tranzitie pentru un nou set de simboli
+	- "&" : marcheaza un loop
+	- ";;" : marcheaza sfarsitul declararii masinii
+	- ";" : marcheaza sfarsitul unei tranzitii
+	- ")" : marcheaza sfarsitul setului de tranzitii curent
+-- CALL: se citeste masina cu urmeaza sa fie apelata
+-- TRANS: se citeste setul de simboli pentru care se vor aplica regulile, apoi se merge
+in starea MACHINE pentru a citi actiunile de executat
+-- LOOP: se citeste eticheta la care sa see revina in cadrul loop-ului
+-- LABEL: se citeste numele unei etichete
+
+Pentru a tine cont la fiecare actiune (tranzitii, etichete, loop-uri sau apeluri)
+din ce context face parte folosesc o stiva de contexte pentru a o adauga in lista
+de actiuni corespunzatoare.
